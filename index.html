@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advanced Indian Income Tax Calculator</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .input-group {
+            @apply relative flex flex-col space-y-1;
+        }
+        .info-tooltip {
+            @apply invisible absolute z-10 bg-gray-900 text-white text-sm rounded-lg p-2 w-64;
+            top: -8px;
+            left: calc(100% + 10px);
+        }
+        .info-icon:hover + .info-tooltip {
+            @apply visible;
+        }
+        @media (max-width: 768px) {
+            .info-tooltip {
+                left: 50%;
+                transform: translateX(-50%);
+                top: 100%;
+            }
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <div class="min-h-screen p-4 md:p-8">
+        <div class="max-w-4xl mx-auto bg-white rounded-lg shadow-lg p-6 mb-6">
+            <h1 class="text-2xl md:text-3xl font-bold text-center text-gray-800 mb-2">
+                Advanced Indian Income Tax Calculator (FY 2023-24)
+            </h1>
+            <p class="text-center text-gray-600">Old Tax Regime with Enhanced Deductions</p>
+        </div>
+
+        <form id="taxForm" class="max-w-4xl mx-auto space-y-6">
+            <!-- Income Section -->
+            <div class="bg-white rounded-lg shadow-lg p-6">
+                <h2 class="text-xl font-semibold mb-4 text-gray-800 flex items-center">
+                    Income Details 
+                    <i class="bi bi-info-circle ml-2 text-gray-500 cursor-help info-icon"></i>
+                    <span class="info-tooltip">Enter all sources of income for accurate tax calculation</span>
+                </h2>
+                <div class="space-y-4">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="input-group">
+                            <label>Salary Income</label>
+                            <input type="number" name="salary" class="p-2 border rounded" placeholder="0">
+                        </div>
+                        <div class="input-group">
+                            <label>Freelance Income</label>
+                            <input type="number" name="freelance" class="p-2 border rounded" placeholder="0">
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="input-group">
+                            <label>Mutual Fund Interest</label>
+                            <input type="number" name="mutualFund" class="p-2 border rounded" placeholder="0">
+                        </div>
+                        <div class="input-group">
+                            <label>Bank Interest</label>
+                            <input type="number" name="bankInterest" class="p-2 border rounded" placeholder="0">
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="input-group">
+                            <label>House Property Income</label>
+                            <input type="number" name="house" class="p-2 border rounded" placeholder="0">
+                        </div>
+                        <div class="input-group">
+                            <label>Business Income</label>
+                            <input type="number" name="business" class="p-2 border rounded" placeholder="0">
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="input-group">
+                            <label>Capital Gains</label>
+                            <input type="number" name="capital" class="p-2 border rounded" placeholder="0">
+                        </div>
+                        <div class="input-group">
+                            <label>Other Income</label>
+                            <input type="number" name="other" class="p-2 border rounded" placeholder="0">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Enhanced Deductions Section -->
+            <div class="bg-white rounded-lg shadow-lg p-6">
+                <h2 class="text-xl font-semibold mb-4 text-gray-800">Enhanced Deductions & Exemptions</h2>
+                
+                <div class="space-y-4">
+                    <h3 class="font-medium text-gray-700">Investment Based</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="input-group">
+                            <label>80C (Max ₹1.5L)</label>
+                            <input type="number" name="80c" max="150000" class="p-2 border rounded" placeholder="0">
+                        </div>
+                        <div class="input-group">
+                            <label>80D (Max ₹1L for Health Insurance)</label>
+                            <input type="number" name="80d" max="100000" class="p-2 border rounded" placeholder="0">
+                        </div>
+                    </div>
+                    <h3 class="font-medium text-gray-700 mt-4">Loan Based</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="input-group">
+                            <label>Home Loan Interest (24b)</label>
+                            <input type="number" name="24b" class="p-2 border rounded" placeholder="0">
+                        </div>
+                        <div class="input-group">
+                            <label>Education Loan (80E)</label>
+                            <input type="number" name="80e" class="p-2 border rounded" placeholder="0">
+                        </div>
+                    </div>
+                    <div class="input-group">
+                        <label>EV Loan Interest (Max ₹1.5L)</label>
+                        <input type="number" name="evLoan" max="150000" class="p-2 border rounded" placeholder="0">
+                    </div>
+                </div>
+
+                <div class="space-y-4 mt-4">
+                    <h3 class="font-medium text-gray-700">Other Deductions</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="input-group">
+                            <label>Donations (80G)</label>
+                            <input type="number" name="80g" class="p-2 border rounded" placeholder="0">
+                        </div>
+                        <div class="input-group">
+                            <label>HRA Exemption</label>
+                            <input type="number" name="hra" class="p-2 border rounded" placeholder="0">
+                        </div>
+                        <div class="input-group">
+                            <label>LTA Exemption</label>
+                            <input type="number" name="lta" class="p-2 border rounded" placeholder="0">
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="input-group">
+                            <label>Professional Tax (Section 16(iii))</label>
+                            <input type="number" name="professionalTax" class="p-2 border rounded" placeholder="0">
+                        </div>
+                        <div class="input-group">
+                            <label>Deductions under Section 80U</label>
+                            <input type="number" name="80u" class="p-2 border rounded" placeholder="0">
+                        </div>
+                    </div>
+                    <div class="input-group">
+                        <label>Interest from Deposits (80TTA)</label>
+                        <input type="number" name="80tta" max="10000" class="p-2 border rounded" placeholder="0">
+                    </div>
+                    <div class="input-group">
+                        <label>Employee's Contribution to NPS (80CCD)</label>
+                        <input type="number" name="80ccd" class="p-2 border rounded" placeholder="0">
+                    </div>
+                    <div class="input-group">
+                        <label>Employer's Contribution to NPS (80CCD(2))</label>
+                        <input type="number" name="80ccd2" class="p-2 border rounded" placeholder="0">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Calculate Button -->
+            <div class="text-center">
+                <button type="submit" class="bg-blue-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors">
+                    Calculate Tax
+                </button>
+            </div>
+        </form>
+
+        <!-- Results Section -->
+        <div id="results" class="max-w-4xl mx-auto mt-6 bg-white rounded-lg shadow-lg p-6 hidden">
+            <h2 class="text-xl font-semibold mb-4 text-gray-800">Detailed Tax Breakdown</h2>
+            <div class="space-y-4">
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="text-gray-600">Gross Total Income:</div>
+                    <div class="font-semibold" id="grossIncome">₹0</div>
+                    <div class="text-gray-600">Total Deductions:</div>
+                    <div class="font-semibold" id="totalDeductions">₹0</div>
+                    <div class="text-gray-600">Taxable Income:</div>
+                    <div class="font-semibold" id="taxableIncome">₹0</div>
+                    <div class="text-gray-600">Income Tax:</div>
+                    <div class="font-semibold" id="incomeTax">₹0</div>
+                    <div class="text-gray-600">Surcharge:</div>
+                    <div class="font-semibold" id="surcharge">₹0</div>
+                    <div class="text-gray-600">Health & Education Cess:</div>
+                    <div class="font-semibold" id="cess">₹0</div>
+                    <div class="text-gray-600">Rebate (87A):</div>
+                    <div class="font-semibold" id="rebate">₹0</div>
+                    <div class="text-gray-600 font-bold text-lg">Final Tax Payable:</div>
+                    <div class="font-bold text-lg text-blue-600" id="finalTax">₹0</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('taxForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Get all income values
+            const salary = Number(this.salary.value) || 0;
+            const freelance = Number(this.freelance.value) || 0;
+            const mutualFund = Number(this.mutualFund.value) || 0;
+            const bankInterest = Number(this.bankInterest.value) || 0;
+            const house = Number(this.house.value) || 0;
+            const business = Number(this.business.value) || 0;
+            const capital = Number(this.capital.value) || 0;
+            const other = Number(this.other.value) || 0;
+
+            // Get all deduction values
+            const d80c = Math.min(Number(this['80c'].value) || 0, 150000);
+            const d80d = Math.min(Number(this['80d'].value) || 0, 100000);
+            const d24b = Number(this['24b'].value) || 0;
+            const d80e = Number(this['80e'].value) || 0;
+            const evLoan = Math.min(Number(this.evLoan.value) || 0, 150000);
+            const d80g = Number(this['80g'].value) || 0;
+            const hra = Number(this.hra.value) || 0;
+            const lta = Number(this.lta.value) || 0;
+            const professionalTax = Number(this.professionalTax.value) || 0;
+            const d80u = Number(this['80u'].value) || 0;
+            const d80tta = Math.min(Number(this['80tta'].value) || 0, 10000);
+            const d80ccd = Number(this['80ccd'].value) || 0;
+            const d80ccd2 = Number(this['80ccd2'].value) || 0;
+
+            // Calculate gross income
+            const grossIncome = salary + freelance + mutualFund + bankInterest + house + business + capital + other;
+            
+            // Calculate total deductions (including standard deduction of 50,000)
+            const totalDeductions = d80c + d80d + d24b + d80e + evLoan + d80g + hra + lta + professionalTax + d80u + d80tta + d80ccd + d80ccd2 + 50000;
+            
+            // Calculate taxable income
+            const taxableIncome = Math.max(0, grossIncome - totalDeductions);
+            
+            // Calculate basic tax based on slabs
+            let tax = 0;
+            if (taxableIncome <= 250000) {
+                tax = 0;
+            } else if (taxableIncome <= 500000) {
+                tax = (taxableIncome - 250000) * 0.05;
+            } else if (taxableIncome <= 1000000) {
+                tax = 12500 + (taxableIncome - 500000) * 0.20;
+            } else {
+                tax = 112500 + (taxableIncome - 1000000) * 0.30;
+            }
+
+            // Calculate surcharge
+            let surcharge = 0;
+            if (taxableIncome > 5000000 && taxableIncome <= 10000000) {
+                surcharge = tax * 0.10;
+            } else if (taxableIncome > 10000000) {
+                surcharge = tax * 0.15;
+            }
+
+            // Calculate cess
+            const cess = (tax + surcharge) * 0.04;
+
+            // Calculate total tax before rebate
+            const totalTax = tax + surcharge + cess;
+
+            // Apply rebate under section 87A
+            let rebate = 0;
+            if (taxableIncome <= 500000) {
+                rebate = Math.min(totalTax, 12500);
+            }
+
+            // Final tax payable
+            const finalTax = Math.max(0, totalTax - rebate);
+
+            // Display results
+            document.getElementById('results').classList.remove('hidden');
+            document.getElementById('grossIncome').textContent = `₹${grossIncome.toFixed(2)}`;
+            document.getElementById('totalDeductions').textContent = `₹${totalDeductions.toFixed(2)}`;
+            document.getElementById('taxableIncome').textContent = `₹${taxableIncome.toFixed(2)}`;
+            document.getElementById('incomeTax').textContent = `₹${tax.toFixed(2)}`;
+            document.getElementById('surcharge').textContent = `₹${surcharge.toFixed(2)}`;
+            document.getElementById('cess').textContent = `₹${cess.toFixed(2)}`;
+            document.getElementById('rebate').textContent = `₹${rebate.toFixed(2)}`;
+            document.getElementById('finalTax').textContent = `₹${finalTax.toFixed(2)}`;
+        });
+
+        // Add input validation
+        document.querySelectorAll('input[type="number"]').forEach(input => {
+            input.addEventListener('input', function() {
+                if (this.value < 0) this.value = 0;
+            });
+        });
+    </script>
+<script>document.body.addEventListener('wheel', e => { if (!e.ctrlKey) return; e.preventDefault(); return }, { passive: false })</script>
+	</body>
+</html>
